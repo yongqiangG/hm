@@ -33,6 +33,13 @@
       </association>
     </collection>
   </resultMap>
+    <resultMap id="MenuWithRole" type="com.johnny.hm.bean.Menu" extends="BaseResultMap">
+        <collection property="roles" ofType="com.johnny.hm.bean.Role">
+            <result column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="namezh"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
     id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
   </sql>
@@ -55,6 +62,12 @@
         m2.enabled=TRUE
 ORDER BY m1.id,m2.id
   </select>
+    <select id="getAllMenusWithRole" resultType="com.johnny.hm.bean.Menu">
+        select m.*,r.`id` as rid,r.`name` as rname,r.`nameZh` as rnameZh
+        from menu m,menu_role mr,role r
+        where m.`id`=mr.`mid` and mr.`rid`=r.`id`
+        order by m.`id`
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from menu
     where id = #{id,jdbcType=INTEGER}

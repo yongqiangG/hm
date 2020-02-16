@@ -16,4 +16,8 @@ public class MenuService {
     public List<Menu> getMenusById() {
         return menuMapper.getMenusById(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
+    //TODO 这个获取菜单可以使用缓存操作,保存到redis,节省数据库操作开销
+    public List<Menu> getAllMenusWithRole(){
+        return menuMapper.getAllMenusWithRole();
+    }
 }
