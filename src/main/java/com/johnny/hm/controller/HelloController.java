@@ -9,4 +9,12 @@ public class HelloController {
     public String sayHello(){
         return "hello,hm";
     }
+    @GetMapping("/employee/basic")
+    public String basic(){
+        return "/employee/basic/**";
+    }
+    @GetMapping("/employee/advanced")
+    public String advanced(){
+        return "/employee/advanced/**";
+    }
 }

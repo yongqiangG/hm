@@ -1,9 +1,12 @@
 package com.johnny.hm.bean;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Hr implements UserDetails {
     private Integer id;
@@ -25,6 +28,16 @@ public class Hr implements UserDetails {
     private String userface;
 
     private String remark;
+
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public Integer getId() {
         return id;
@@ -98,9 +111,15 @@ public class Hr implements UserDetails {
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
     }
-
+    //设置登录用户角色
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<SimpleGrantedAuthority> roles = new ArrayList<>(this.roles.size());
+        //遍历用户角色
+        for (Role role : this.roles) {
+            roles.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        //返回用户角色
+        return roles;
     }
 
     public String getPassword() {

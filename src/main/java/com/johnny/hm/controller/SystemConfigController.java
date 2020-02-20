@@ -14,6 +14,7 @@ import java.util.List;
 public class SystemConfigController {
     @Autowired
     MenuService menuService;
+
     @GetMapping("/menu")
     public List<Menu> getMenusById() {
         return menuService.getMenusById();

@@ -25,6 +25,11 @@
     <select id="loadUserByUsername" resultType="com.johnny.hm.bean.Hr">
         select * from hr where username=#{username}
     </select>
+    <select id="getRolesById" resultType="com.johnny.hm.bean.Role">
+        select r.* from role r,hr_role hr
+        where hr.hrid=#{hrId}
+        and hr.rid=r.id
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from hr
     where id = #{id,jdbcType=INTEGER}
