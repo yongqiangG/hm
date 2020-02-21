@@ -2,6 +2,8 @@ package com.johnny.hm.mapper;
 
 import com.johnny.hm.bean.Position;
 
+import java.util.List;
+
 public interface PositionMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,10 @@ public interface PositionMapper {
     int updateByPrimaryKeySelective(Position record);
 
     int updateByPrimaryKey(Position record);
+
+    List<Position> getAllPosition();
+
+    int postPosition(Position position);
+
+    int putPosition(Position position);
 }
