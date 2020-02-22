@@ -23,11 +23,18 @@
     delete from position
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!--批量删除-->
+  <delete id="deleteByIds">
+        delete from position where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+          #{id}
+        </foreach>
+  </delete>
   <insert id="insert" parameterType="com.johnny.hm.bean.Position" >
-    insert into position (id, name, createDate, 
+    insert into position (name, createDate,
       enabled)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{enabled,jdbcType=BIT})
+    values (#{name,jdbcType=VARCHAR}, now(),
+      1)
   </insert>
   <insert id="insertSelective" parameterType="com.johnny.hm.bean.Position">
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -80,8 +87,7 @@
   <update id="updateByPrimaryKey" parameterType="com.johnny.hm.bean.Position" >
     update position
     set name = #{name,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=BIT}
+      createDate = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="putPosition" parameterType="com.johnny.hm.bean.Position">

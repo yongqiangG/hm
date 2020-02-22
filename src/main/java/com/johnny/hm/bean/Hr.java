@@ -113,7 +113,7 @@ public class Hr implements UserDetails {
     }
     //设置登录用户角色
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> roles = new ArrayList<>(this.roles.size());
+        List<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>(this.roles.size());
         //遍历用户角色
         for (Role role : this.roles) {
             roles.add(new SimpleGrantedAuthority(role.getName()));
