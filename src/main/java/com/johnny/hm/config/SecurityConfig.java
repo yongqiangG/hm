@@ -138,6 +138,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException e) throws IOException, ServletException {
                 //处理访问没有权限的接口,未登录
                 resp.setContentType("application/json;charset=utf-8");
+                //前端重定向到登录页使用
+                resp.setStatus(401);
                 RespBean respBean = RespBean.err("登陆失败");
                 if(e instanceof InsufficientAuthenticationException){
                     respBean.setMsg("请先登录");

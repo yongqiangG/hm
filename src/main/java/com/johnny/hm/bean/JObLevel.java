@@ -1,5 +1,7 @@
 package com.johnny.hm.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class JObLevel {
@@ -7,9 +9,9 @@ public class JObLevel {
 
     private String name;
 
-    private String titlelevel;
-
-    private Date createdate;
+    private String titleLevel;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
+    private Date createDate;
 
     private Boolean enabled;
 
@@ -29,20 +31,20 @@ public class JObLevel {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getTitlelevel() {
-        return titlelevel;
+    public String getTitleLevel() {
+        return titleLevel;
     }
 
-    public void setTitlelevel(String titlelevel) {
-        this.titlelevel = titlelevel == null ? null : titlelevel.trim();
+    public void setTitleLevel(String titleLevel) {
+        this.titleLevel = titleLevel;
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public Boolean getEnabled() {
