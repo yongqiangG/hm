@@ -66,4 +66,20 @@
       rid = #{rid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getMidByRid" resultType="integer">
+    select mid
+    from menu_role
+    where rid = #{rid}
+  </select>
+  <delete id="delMidByRid">
+    delete
+    from menu_role
+    where rid = #{rid}
+  </delete>
+  <insert id="addMenus">
+    insert into menu_role (mid,rid) values
+    <foreach collection="mids" item="mid" separator=",">
+      (#{mid},#{rid})
+    </foreach>
+  </insert>
 </mapper>

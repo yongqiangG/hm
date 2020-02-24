@@ -4,10 +4,14 @@
   <resultMap id="BaseResultMap" type="com.johnny.hm.bean.Department" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="parentId" property="parentid" jdbcType="INTEGER" />
-    <result column="depPath" property="deppath" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentId" jdbcType="INTEGER" />
+    <result column="depPath" property="depPath" jdbcType="VARCHAR" />
     <result column="enabled" property="enabled" jdbcType="BIT" />
-    <result column="isParent" property="isparent" jdbcType="BIT" />
+    <result column="isParent" property="isParent" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="DepTree" type="com.johnny.hm.bean.Department" extends="BaseResultMap">
+    <collection property="children" ofType="com.johnny.hm.bean.Department"
+                select="com.johnny.hm.mapper.DepartmentMapper.getDepTree" column="id"></collection>
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, parentId, depPath, enabled, isParent
@@ -18,7 +22,11 @@
     from department
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <!--递归获取所有部门-->
+    <select id="getDepTree" resultMap="DepTree">
+        select * from department where parentId=-1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from department
     where id = #{id,jdbcType=INTEGER}
   </delete>

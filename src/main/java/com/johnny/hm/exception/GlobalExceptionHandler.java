@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public class GlobalExceptionHandler {
     @ExceptionHandler(SQLException.class)
     public RespBean SQLExceptionHandler(SQLException e){
+        //外键异常
         if(e instanceof MySQLIntegrityConstraintViolationException){
             return  RespBean.err("该数据已被引用,删除失败");
         }
