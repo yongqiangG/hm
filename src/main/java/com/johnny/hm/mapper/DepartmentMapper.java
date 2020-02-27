@@ -17,5 +17,9 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    List<Department> getDepTree();
+    List<Department> getDepTree(Integer parentId);
+
+    void addDep(Department dep);
+
+    void delDep(Department dep);
 }

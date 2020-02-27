@@ -10,7 +10,16 @@ import java.util.List;
 public class DepartmentService {
     @Autowired
     DepartmentMapper departmentMapper;
-    public List<Department> getDepTree() {
-        return departmentMapper.getDepTree();
+    public List<Department> getDepTree(Integer parentId) {
+        return departmentMapper.getDepTree(parentId);
+    }
+
+    public void addDep(Department dep) {
+        dep.setEnabled(true);
+        departmentMapper.addDep(dep);
+    }
+
+    public void delDep(Department dep) {
+        departmentMapper.delDep(dep);
     }
 }

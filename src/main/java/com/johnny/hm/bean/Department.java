@@ -1,5 +1,6 @@
 package com.johnny.hm.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
@@ -15,7 +16,18 @@ public class Department {
 
     private Boolean isParent;
 
-    private List<Department> children;
+    private List<Department> children=new ArrayList<>();
+    //存储过程的Id回调
+    private Integer result;
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
 
     public List<Department> getChildren() {
         return children;

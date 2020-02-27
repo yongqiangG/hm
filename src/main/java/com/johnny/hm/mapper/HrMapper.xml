@@ -13,6 +13,13 @@
         <result column="userface" property="userface" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="ResultMap1" type="com.johnny.hm.bean.Hr" extends="BaseResultMap">
+        <collection property="roles" ofType="com.johnny.hm.bean.Role">
+            <id column="rid" property="id" jdbcType="INTEGER"/>
+            <id column="rName" property="name" jdbcType="VARCHAR"/>
+            <id column="rNameZh" property="nameZh" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
@@ -29,6 +36,12 @@
         select r.* from role r,hr_role hr
         where hr.hrid=#{hrId}
         and hr.rid=r.id
+    </select>
+    <!--获取除自己以外的其他用户-->
+    <select id="getAllHrs" resultMap="ResultMap1">
+        select hr.id, hr.name, hr.phone, hr.telephone, hr.address, hr.enabled, hr.username, hr.userface,
+               hr.remark,r.`id` as rid,r.`name` as rname,r.`nameZh` as rnameZh from hr left join hr_role hrr on
+            hr.`id`=hrr.`hrid` left join role r on hrr.`rid`=r.`id` where hr.`id`!=#{id}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from hr

@@ -3,6 +3,7 @@ package com.johnny.hm.service;
 import com.johnny.hm.bean.Hr;
 import com.johnny.hm.bean.Role;
 import com.johnny.hm.mapper.HrMapper;
+import com.johnny.hm.utils.HrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,5 +26,11 @@ public class HrService implements UserDetailsService {
         List<Role> roles = hrMapper.getRolesById(hr.getId());
         hr.setRoles(roles);
         return hr;
+    }
+
+
+    public List<Hr> getAllHrs() {
+        Hr currentUser = HrUtil.getCurrentUser();
+        return hrMapper.getAllHrs(currentUser.getId());
     }
 }

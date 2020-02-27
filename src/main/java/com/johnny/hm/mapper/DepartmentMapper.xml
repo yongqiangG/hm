@@ -9,6 +9,7 @@
     <result column="enabled" property="enabled" jdbcType="BIT" />
     <result column="isParent" property="isParent" jdbcType="BIT" />
   </resultMap>
+  <!--迭代获取部门树-->
   <resultMap id="DepTree" type="com.johnny.hm.bean.Department" extends="BaseResultMap">
     <collection property="children" ofType="com.johnny.hm.bean.Department"
                 select="com.johnny.hm.mapper.DepartmentMapper.getDepTree" column="id"></collection>
@@ -24,7 +25,7 @@
   </select>
   <!--递归获取所有部门-->
     <select id="getDepTree" resultMap="DepTree">
-        select * from department where parentId=-1
+        select * from department where parentId=#{parentId}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from department
@@ -79,6 +80,19 @@
       </if>
     </trim>
   </insert>
+  <!--调用存储过程
+      1.插入name,parentID,enabled
+      2.根据pid查询到父节点的depPath
+      3.获取到的父节点的depPath拼接上插入数据的id在插入子节点的depPath
+  -->
+  <select id="addDep" statementType="CALLABLE">
+    call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},
+        #{enabled,mode=IN,jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
+  </select>
+  <!--调用删除部门的存储过程-->
+  <select id="delDep" statementType="CALLABLE">
+    call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+  </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.johnny.hm.bean.Department" >
     update department
     <set >
