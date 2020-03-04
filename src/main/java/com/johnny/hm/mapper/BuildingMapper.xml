@@ -5,9 +5,10 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="hotelId" property="hotelId" jdbcType="INTEGER"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, hotelId
+        id, name, hotelId,createDate
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -19,7 +20,7 @@
     <select id="getBuildingById" resultType="com.johnny.hm.bean.Building">
         select
         <include refid="Base_Column_List"/>
-        from building where hotelId=#{id}
+        from building where hotelId=#{id} order by id
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -77,7 +78,7 @@
     <!--修改楼栋名称-->
     <update id="updateByPrimaryKey" parameterType="com.johnny.hm.bean.Building">
         update building
-        set name = #{name,jdbcType=VARCHAR}
+        set name = #{name,jdbcType=VARCHAR},createDate=#{createDate}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

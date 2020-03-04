@@ -1,5 +1,7 @@
 package com.johnny.hm.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Room {
@@ -22,7 +24,7 @@ public class Room {
     private Integer roomStatus;
 
     private Boolean enabled;
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date createDate;
 
     private String ip;

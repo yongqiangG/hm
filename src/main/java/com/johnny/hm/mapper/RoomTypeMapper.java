@@ -2,6 +2,9 @@ package com.johnny.hm.mapper;
 
 
 import com.johnny.hm.bean.RoomType;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoomTypeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +18,8 @@ public interface RoomTypeMapper {
     int updateByPrimaryKeySelective(RoomType record);
 
     int updateByPrimaryKey(RoomType record);
+
+    List<RoomType> getRoomType(Integer id);
+
+    int delRoomType(@Param("ids") Integer[] ids);
 }
