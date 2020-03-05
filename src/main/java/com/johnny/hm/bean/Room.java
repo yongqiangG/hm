@@ -44,12 +44,42 @@ public class Room {
     private Boolean takePowerSettingSendStatus;
 
     private Boolean seasonSettingSendStatus;
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date expiredDate;
 
     private Date serverTime;
 
     private Integer hotelId;
+
+    private Building building;
+
+    private TxFloor txFloor;
+
+    private RoomType roomType;
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public TxFloor getTxFloor() {
+        return txFloor;
+    }
+
+    public void setTxFloor(TxFloor txFloor) {
+        this.txFloor = txFloor;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
 
     public Integer getId() {
         return id;

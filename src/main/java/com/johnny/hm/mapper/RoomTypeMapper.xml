@@ -531,4 +531,11 @@
             createDate           = #{createDate}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <update id="updateRoomType" parameterType="com.johnny.hm.bean.RoomType">
+        update roomtype
+        set name                 = #{name,jdbcType=VARCHAR},
+            isWireless           = #{isWireless,jdbcType=INTEGER},
+            createDate           = #{createDate}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

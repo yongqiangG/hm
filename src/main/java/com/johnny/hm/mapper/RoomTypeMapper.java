@@ -19,6 +19,8 @@ public interface RoomTypeMapper {
 
     int updateByPrimaryKey(RoomType record);
 
+    int updateRoomType(RoomType record);
+
     List<RoomType> getRoomType(Integer id);
 
     int delRoomType(@Param("ids") Integer[] ids);

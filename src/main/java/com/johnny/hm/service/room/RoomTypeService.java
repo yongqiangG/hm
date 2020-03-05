@@ -25,7 +25,7 @@ public class RoomTypeService {
 
     public int putRoomType(RoomType roomType) {
         roomType.setCreateDate(new Date());
-        return roomTypeMapper.updateByPrimaryKey(roomType);
+        return roomTypeMapper.updateRoomType(roomType);
     }
 
     public int delRoomType(Integer[] ids) {
