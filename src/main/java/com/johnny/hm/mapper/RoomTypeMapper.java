@@ -24,4 +24,6 @@ public interface RoomTypeMapper {
     List<RoomType> getRoomType(Integer id);
 
     int delRoomType(@Param("ids") Integer[] ids);
+
+    List<RoomType> getRoomTypeWithAir(Integer id);
 }

@@ -3,6 +3,7 @@ package com.johnny.hm.bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class RoomType {
     private Integer id;
@@ -88,6 +89,16 @@ public class RoomType {
     private Integer hotelId;
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date createDate;
+
+    private List<Air> airs;
+
+    public List<Air> getAirs() {
+        return airs;
+    }
+
+    public void setAirs(List<Air> airs) {
+        this.airs = airs;
+    }
 
     public Date getCreateDate() {
         return createDate;

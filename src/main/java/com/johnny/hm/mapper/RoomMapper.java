@@ -19,11 +19,15 @@ public interface RoomMapper {
 
     int updateByPrimaryKey(Room record);
 
-    List<Room> getRoom(@Param("id") Integer id,@Param("page") Integer page,@Param("size") Integer size,@Param("kw") String kw);
+    List<Room> getRoom(@Param("id") Integer id,@Param("page") Integer page,
+                       @Param("size") Integer size,@Param("kw") String kw
+    );
 
     int delRoom(@Param("ids") Integer[] ids);
 
     int updateRoom(Room room);
 
     int getTotal(@Param("hotelId") int hotelId,@Param("kw") String kw);
+
+    List<Room> getRoomByRid(Integer rid);
 }

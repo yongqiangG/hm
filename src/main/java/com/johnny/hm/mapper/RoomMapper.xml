@@ -56,13 +56,13 @@
     <select id="getRoom" resultMap="AllInfo">
         select r.*, f.id as fid, f.name as fname, b.id as bid, b.name as bname, rt.id as rid, rt.name as rname
         from room r,
-             txfloor f,
-             building b,
-             roomtype rt
+        txfloor f,
+        building b,
+        roomtype rt
         where r.hotelId = #{id}
-          and r.floorid = f.id
-          and f.buildingid = b.id
-          and r.roomtypeid = rt.id
+        and r.floorid = f.id
+        and f.buildingid = b.id
+        and r.roomtypeid = rt.id
         <if test="kw!=''">
             and r.roomNo like concat('%',#{kw},'%')
         </if>
@@ -73,14 +73,28 @@
         </if>
     </select>
     <select id="getTotal" resultType="java.lang.Integer">
-        select count(*) from room r <where>
-        <if test="hotelId!=null">
-            and r.hotelId=#{hotelId}
-        </if>
-    <if test="kw!=''">
-        and r.roomNo like concat('%',#{kw},'%')
-    </if>
-    </where>
+        select count(*) from room r
+        <where>
+            <if test="hotelId!=null">
+                and r.hotelId=#{hotelId}
+            </if>
+            <if test="kw!=''">
+                and r.roomNo like concat('%',#{kw},'%')
+            </if>
+        </where>
+    </select>
+    <!--根据房型id获取设备-->
+    <select id="getRoomByRid" resultMap="AllInfo">
+        select r.*, f.id as fid, f.name as fname, b.id as bid, b.name as bname, rt.id as rid, rt.name as rname
+        from room r,
+             txfloor f,
+             building b,
+             roomtype rt
+        where roomTypeId = #{rid}
+          and r.floorid = f.id
+          and f.buildingid = b.id
+          and r.roomtypeid = rt.id
+        order by r.id
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

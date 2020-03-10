@@ -6,6 +6,8 @@ import com.johnny.hm.service.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/setting/room")
 public class RoomController {
@@ -16,6 +18,11 @@ public class RoomController {
                                     @RequestParam(defaultValue = "10")Integer size,
                                     String kw){
         return roomService.getRoom(page,size,kw);
+    }
+
+    @GetMapping("/rid/{rid}")
+    public List<Room> getRoomByRid(@PathVariable("rid")Integer rid){
+        return roomService.getRoomByRid(rid);
     }
 
     @PostMapping("/")

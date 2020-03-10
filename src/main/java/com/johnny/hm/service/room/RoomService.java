@@ -45,4 +45,8 @@ public class RoomService {
     public int delRoom(Integer[] ids){
         return roomMapper.delRoom(ids);
     }
+
+    public List<Room> getRoomByRid(Integer rid) {
+        return roomMapper.getRoomByRid(rid);
+    }
 }

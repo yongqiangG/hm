@@ -45,6 +45,13 @@
         <result column="hotelId" property="hotelId" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="RoomTypeWithAir" type="com.johnny.hm.bean.RoomType" extends="BaseResultMap">
+        <collection property="airs" ofType="com.johnny.hm.bean.Air">
+            <id column="aid" property="id" jdbcType="INTEGER"/>
+            <id column="airNo" property="airNo" jdbcType="INTEGER"/>
+            <id column="airName" property="airName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
         id, name, air1, air2, air3, air4, air5, air6, air7, air8, tv1, tv2, tv3, tv4, tv5,
     tv6, tv7, tv8, safeTimeout, cardTimeout, openDoorTimeout, airStatus, logicCloudUpdateTime, 
@@ -63,6 +70,14 @@
         select
         <include refid="Base_Column_List"/>
         from roomType where hotelId=#{id} order by id
+    </select>
+    <!--获取带有空调名称的房型-->
+    <select id="getRoomTypeWithAir" resultMap="RoomTypeWithAir">
+        select r.*, a.id as aid, a.airno as airNo, a.airname as airName
+        from roomtype r
+                 LEFT JOIN air a
+                           on r.id = a.roomtypeid
+        where hotelId = #{id} order by r.id,airNo
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -533,9 +548,9 @@
     </update>
     <update id="updateRoomType" parameterType="com.johnny.hm.bean.RoomType">
         update roomtype
-        set name                 = #{name,jdbcType=VARCHAR},
-            isWireless           = #{isWireless,jdbcType=INTEGER},
-            createDate           = #{createDate}
+        set name       = #{name,jdbcType=VARCHAR},
+            isWireless = #{isWireless,jdbcType=INTEGER},
+            createDate = #{createDate}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>
