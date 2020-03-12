@@ -31,15 +31,17 @@ import java.io.PrintWriter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     HrService hrService;
     @Autowired
     CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
     @Autowired
     CustomUrlDecisionManager customUrlDecisionManager;
+
     @Bean
-    //使用spring security的加密工具BCryptPasswordEncoder,相同密码可以加密成不同的密码
-    PasswordEncoder passwordEncoder(){
+        //使用spring security的加密工具BCryptPasswordEncoder,相同密码可以加密成不同的密码
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -51,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     //配置不拦截login请求
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/login","/css/**","/fonts/**","/img/**","/js/**","/index.html","/favicon.ico");
+        web.ignoring().antMatchers("/login", "/css/**", "/fonts/**", "/img/**", "/js/**", "/index.html", "/favicon.ico");
     }
 
     @Override
@@ -95,15 +97,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         //登陆失败,返回登录失败信息
                         resp.setContentType("application/json;charset=utf-8");
                         RespBean respBean = RespBean.err("登陆失败");
-                        if(exception instanceof AccountExpiredException){
+                        if (exception instanceof AccountExpiredException) {
                             respBean.setMsg("账号过期");
-                        }else if(exception instanceof LockedException){
+                        } else if (exception instanceof LockedException) {
                             respBean.setMsg("账号被锁定");
-                        }else if(exception instanceof CredentialsExpiredException){
+                        } else if (exception instanceof CredentialsExpiredException) {
                             respBean.setMsg("密码过期");
-                        }else if(exception instanceof DisabledException){
+                        } else if (exception instanceof DisabledException) {
                             respBean.setMsg("账号被禁用");
-                        }else if(exception instanceof BadCredentialsException){
+                        } else if (exception instanceof BadCredentialsException) {
                             respBean.setMsg("账号或密码错误");
                         }
                         PrintWriter pw = resp.getWriter();
@@ -130,7 +132,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll()
 
-                ;
+
+
+
+        ;
         //关闭跨域保护,方便postman测试
         http.csrf().disable();
         http.exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
@@ -141,7 +146,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //前端重定向到登录页使用
                 resp.setStatus(401);
                 RespBean respBean = RespBean.err("登陆失败");
-                if(e instanceof InsufficientAuthenticationException){
+                if (e instanceof InsufficientAuthenticationException) {
                     respBean.setMsg("请先登录");
                 }
                 PrintWriter pw = resp.getWriter();
