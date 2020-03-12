@@ -6,17 +6,36 @@
         <result column="airNo" property="airNo" jdbcType="INTEGER"/>
         <result column="airName" property="airName" jdbcType="VARCHAR"/>
         <result column="roomTypeId" property="roomTypeId" jdbcType="INTEGER"/>
+        <result column="airStrategyId" property="airStrategyId" jdbcType="INTEGER"/>
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="ResultWithStrategy" type="com.johnny.hm.bean.Air" extends="BaseResultMap">
+        <association property="airStrategy" javaType="com.johnny.hm.bean.AirStrategy">
+            <id column="sid" property="id" jdbcType="INTEGER"/>
+            <result column="sname" property="name" jdbcType="VARCHAR"/>
+        </association>
+        <association property="roomType" javaType="com.johnny.hm.bean.RoomType">
+            <id column="rid" property="id" jdbcType="INTEGER"/>
+            <result column="rname" property="name" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
     <sql id="Base_Column_List">
-        id, airNo, airName, roomTypeId, createTime, updateTime
+        id, airNo, airName, roomTypeId, createTime, updateTime,airStrategyId
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from air
         where id = #{id,jdbcType=INTEGER}
+    </select>
+    <!--查询带策略的空调-->
+    <select id="getAirWithStrategy" resultMap="ResultWithStrategy">
+        select a.*, airs.id as sid, airs.`name` as sname, r.id as rid, r.`name` as rname
+        from air a
+                 LEFT JOIN airstrategy airs on a.airstrategyid = airs.id
+                 LEFT JOIN roomtype r on r.id = a.roomTypeId
+        where r.hotelId = #{id}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -31,9 +50,10 @@
     </delete>
     <insert id="insert" parameterType="com.johnny.hm.bean.Air">
         insert into air (id, airNo, airName,
-                         roomTypeId, createTime, updateTime)
+                         roomTypeId, createTime, updateTime, airStrategyId)
         values (#{id,jdbcType=INTEGER}, #{airno,jdbcType=INTEGER}, #{airname,jdbcType=VARCHAR},
-                #{roomtypeid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+                #{roomtypeid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP},
+                #{airStrategyId,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.johnny.hm.bean.Air">
         insert into air
@@ -56,6 +76,9 @@
             <if test="updatetime != null">
                 updateTime,
             </if>
+            <if test="airstrategyid != null">
+                roomTypeId,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -75,6 +98,9 @@
             </if>
             <if test="updatetime != null">
                 #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="airstrategyid != null">
+                #{airstrategyid,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -108,11 +134,12 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.johnny.hm.bean.Air">
         update air
-        set airNo      = #{airno,jdbcType=INTEGER},
-            airName    = #{airname,jdbcType=VARCHAR},
-            roomTypeId = #{roomtypeid,jdbcType=INTEGER},
-            createTime = #{createtime,jdbcType=TIMESTAMP},
-            updateTime = #{updatetime,jdbcType=TIMESTAMP}
+        set airNo         = #{airno,jdbcType=INTEGER},
+            airName       = #{airname,jdbcType=VARCHAR},
+            roomTypeId    = #{roomtypeid,jdbcType=INTEGER},
+            airStrategyId = #{airstrategyid,jdbcType=INTEGER},
+            createTime    = #{createtime,jdbcType=TIMESTAMP},
+            updateTime    = #{updatetime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

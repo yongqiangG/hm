@@ -10,13 +10,41 @@ public class Air {
     private String airName;
 
     private Integer roomTypeId;
+    private Integer airStrategyId;
 
     private Date createTime;
 
     private Date updateTime;
 
+    private AirStrategy airStrategy;
+    private RoomType roomType;
+
+    public AirStrategy getAirStrategy() {
+        return airStrategy;
+    }
+
+    public void setAirStrategy(AirStrategy airStrategy) {
+        this.airStrategy = airStrategy;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
     public Integer getId() {
         return id;
+    }
+
+    public Integer getAirStrategyId() {
+        return airStrategyId;
+    }
+
+    public void setAirStrategyId(Integer airStrategyId) {
+        this.airStrategyId = airStrategyId;
     }
 
     public void setId(Integer id) {

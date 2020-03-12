@@ -22,4 +22,6 @@ public interface AirMapper {
     void deleteAirs(Integer roomTypeId);
 
     int putAirs(@Param("airs") List<Air> airs);
+
+    List<Air> getAirWithStrategy(Integer id);
 }

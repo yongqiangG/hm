@@ -22,13 +22,9 @@ public class HmApplicationTests {
         PasswordEncoder pwe = new BCryptPasswordEncoder();
         String[] strings = new String[10];
         for (int i = 0; i < 10; i++) {
-            String encode = pwe.encode("123");
+            String encode = pwe.encode("johnny");
             System.out.println(encode);
             strings[i] = encode;
-        }
-        for (String s : strings) {
-            boolean b = pwe.matches("123s", s);
-            System.out.println(b);
         }
     }
     @Test

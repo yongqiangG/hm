@@ -30,4 +30,8 @@ public class AirService {
             return airMapper.putAirs(airs);
         }
     }
+
+    public List<Air> getAirWithStrategy() {
+        return airMapper.getAirWithStrategy(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+    }
 }
