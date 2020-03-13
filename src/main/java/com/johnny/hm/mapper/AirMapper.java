@@ -24,4 +24,6 @@ public interface AirMapper {
     int putAirs(@Param("airs") List<Air> airs);
 
     List<Air> getAirWithStrategy(Integer id);
+
+    int changeStrategy(Air air);
 }

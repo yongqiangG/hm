@@ -34,4 +34,8 @@ public class AirService {
     public List<Air> getAirWithStrategy() {
         return airMapper.getAirWithStrategy(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
+
+    public int changeAirStrategy(Air air) {
+        return airMapper.changeStrategy(air);
+    }
 }

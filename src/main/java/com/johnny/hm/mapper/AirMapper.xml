@@ -142,4 +142,10 @@
             updateTime    = #{updatetime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <!--更新空调策略-->
+    <update id="changeStrategy">
+        update air
+        set airStrategyId = #{airStrategyId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

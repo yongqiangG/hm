@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -22,6 +24,8 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +36,7 @@ import java.io.PrintWriter;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     HrService hrService;
     @Autowired
@@ -39,6 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomUrlDecisionManager customUrlDecisionManager;
 
+    @Bean
+    SessionRegistry sessionRegistry(){
+        return new SessionRegistryImpl();
+    }
+    @Bean
+    HttpSessionEventPublisher httpSessionEventPublisher(){
+        return new HttpSessionEventPublisher();
+    }
     @Bean
         //使用spring security的加密工具BCryptPasswordEncoder,相同密码可以加密成不同的密码
     PasswordEncoder passwordEncoder() {
@@ -107,6 +120,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             respBean.setMsg("账号被禁用");
                         } else if (exception instanceof BadCredentialsException) {
                             respBean.setMsg("账号或密码错误");
+                        }else if(exception instanceof SessionAuthenticationException){
+                            respBean.setMsg("当前账户已登录,请稍后再试");
                         }
                         PrintWriter pw = resp.getWriter();
                         pw.write(new ObjectMapper().writeValueAsString(respBean));
@@ -132,6 +147,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll()
 
+        .and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
 
 
 
