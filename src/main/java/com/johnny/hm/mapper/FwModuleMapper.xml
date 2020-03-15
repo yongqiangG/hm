@@ -21,6 +21,9 @@
     delete from fwmodule
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="delByFid">
+    delete from fwmodule where fid=#{fid}
+  </delete>
   <insert id="insert" parameterType="com.johnny.hm.bean.FwModule" >
     insert into fwmodule (id, fId, mId, 
       createTime, updateTime)
@@ -63,6 +66,12 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
+  </insert>
+  <insert id="addModule">
+    insert into fwmodule (fid,mid) values
+    <foreach collection="mids" item="mid" separator=",">
+      (#{fid},#{mid})
+    </foreach>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.johnny.hm.bean.FwModule" >
     update fwmodule

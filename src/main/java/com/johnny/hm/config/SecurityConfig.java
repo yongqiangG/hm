@@ -147,7 +147,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll()
 
-        .and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
+        //.and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/Login");
 
 
 

@@ -2,6 +2,9 @@ package com.johnny.hm.mapper;
 
 
 import com.johnny.hm.bean.ModuleType;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ModuleTypeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +18,8 @@ public interface ModuleTypeMapper {
     int updateByPrimaryKeySelective(ModuleType record);
 
     int updateByPrimaryKey(ModuleType record);
+
+    List<ModuleType> getModule();
+
+    int delByIds(@Param("ids") Integer[] ids);
 }

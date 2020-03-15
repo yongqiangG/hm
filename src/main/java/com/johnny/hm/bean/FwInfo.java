@@ -1,6 +1,9 @@
 package com.johnny.hm.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
+import java.util.List;
 
 public class FwInfo {
     private Integer id;
@@ -12,10 +15,30 @@ public class FwInfo {
     private String fwPath;
 
     private String remark;
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private Date createTime;
 
     private Date updateTime;
+
+    private FwType fwType;
+
+    public FwType getFwType() {
+        return fwType;
+    }
+
+    public void setFwType(FwType fwType) {
+        this.fwType = fwType;
+    }
+
+    private List<ModuleType> moduleTypes;
+
+    public List<ModuleType> getModuleTypes() {
+        return moduleTypes;
+    }
+
+    public void setModuleTypes(List<ModuleType> moduleTypes) {
+        this.moduleTypes = moduleTypes;
+    }
 
     public Integer getId() {
         return id;

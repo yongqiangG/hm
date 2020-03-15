@@ -16,15 +16,21 @@
     from moduletype
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="getModule" resultType="com.johnny.hm.bean.ModuleType">
+      select * from moduletype
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from moduletype
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="delByIds">
+    delete from moduletype where id in <foreach collection="ids" separator="," item="id" open="(" close=")">
+    #{id}
+  </foreach>
+  </delete>
   <insert id="insert" parameterType="com.johnny.hm.bean.ModuleType" >
-    insert into moduletype (id, name, createTime, 
-      updateTime)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into moduletype ( name)
+    values (#{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.johnny.hm.bean.ModuleType" >
     insert into moduletype
@@ -74,9 +80,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.johnny.hm.bean.ModuleType" >
     update moduletype
-    set name = #{name,jdbcType=VARCHAR},
-      createTime = #{createTime,jdbcType=TIMESTAMP},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
