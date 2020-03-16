@@ -41,8 +41,10 @@ public class FwInfoService {
         //删除文件
         List<FwInfo> list= fwInfoMapper.getByIds(ids);
         for (FwInfo fwInfo : list) {
-            File file = new File(fwInfo.getFwPath());
-            file.delete();
+            if(fwInfo.getFwPath()!=""&& fwInfo.getFwPath()!=null){
+                File file = new File(fwInfo.getFwPath());
+                file.delete();
+            }
         }
         return fwInfoMapper.delByIds(ids);
     }

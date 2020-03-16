@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     //配置不拦截login请求
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/login", "/css/**", "/fonts/**", "/img/**", "/js/**", "/index.html", "/favicon.ico");
+        web.ignoring().antMatchers("/login", "/css/**", "/fonts/**", "/img/**", "/js/**", "/index.html", "/favicon.ico","/a.html");
     }
 
     @Override

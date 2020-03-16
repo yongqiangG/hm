@@ -22,7 +22,7 @@ public class HmApplicationTests {
         PasswordEncoder pwe = new BCryptPasswordEncoder();
         String[] strings = new String[10];
         for (int i = 0; i < 10; i++) {
-            String encode = pwe.encode("johnny");
+            String encode = pwe.encode("chenxiaomin");
             System.out.println(encode);
             strings[i] = encode;
         }
