@@ -69,7 +69,7 @@
     <select id="getRoomType" resultType="com.johnny.hm.bean.RoomType">
         select
         <include refid="Base_Column_List"/>
-        from roomType where hotelId=#{id} order by id
+        from roomtype where hotelId=#{id} order by id
     </select>
     <!--获取带有空调名称的房型-->
     <select id="getRoomTypeWithAir" resultMap="RoomTypeWithAir">
