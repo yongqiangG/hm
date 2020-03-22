@@ -1,5 +1,6 @@
 package com.johnny.hm.controller;
 
+import com.johnny.hm.model.ChatMsg;
 import com.johnny.hm.model.RespMsg;
 import com.johnny.hm.utils.WsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Controller
-@RequestMapping("/ws")
 public class WsController {
     @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    SimpMessagingTemplate simpMessagingTemplate;
+
+    /**
+     * 聊天消息处理
+     */
+    @MessageMapping("/ws/chat")
+    public void handleMsg(Principal principal, ChatMsg chatMsg){
+        chatMsg.setFrom(principal.getName());
+        chatMsg.setDate(new Date());
+        simpMessagingTemplate.convertAndSendToUser(chatMsg.getTo(),"/queue/chat",chatMsg);
+    }
     @RequestMapping("/pushMsg")
     @ResponseBody
     public void pushMsg(){
